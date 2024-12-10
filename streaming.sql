@@ -68,4 +68,17 @@ END AS Status
 FROM user U INNER JOIN watchhistory W ON U.UserID = W.UserID WHERE W.CompletionPercentage = 100;
 
 -- Trier et limiter : Afficher les 5 films les plus longs, triés par durée.
-SELECT * FROM movie ORDER BY Duration DESC;
+SELECT * FROM movie ORDER BY Duration DESC LIMIT 5;
+
+-- Agrégation : Calculer le pourcentage moyen de complétion pour chaque film.
+SELECT
+    movie.Title,
+    AVG(watchhistory.CompletionPercentage)
+FROM 
+    movie
+INNER JOIN 
+    watchhistory
+ON 
+    movie.MovieID = watchhistory.MovieID
+GROUP BY watchhistory.MovieID
+
