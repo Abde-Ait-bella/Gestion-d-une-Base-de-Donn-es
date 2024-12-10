@@ -56,3 +56,8 @@ INSERT INTO movie (Title, Genre) VALUES ('Data Science Adventures', 'Documentary
 -- Rechercher des films : Lister tous les films du genre "Comedy" sortis après 2020
 SELECT * FROM movie WHERE genre = "Comedy" AND ReleaseYear > 2020;
 
+-- Afficher les abonnements : Joindre les utilisateurs à leurs types d'abonnements.
+SELECT * , S.Subscription_Type FROM user U INNER JOIN subscription S ON U.SubscriptionID = S.SubscriptionID
+
+-- Afficher les abonnements : Joindre les utilisateurs à leurs types d'abonnements.
+SELECT * FROM review WHERE ReviewDate < CURRENT_DATE();
