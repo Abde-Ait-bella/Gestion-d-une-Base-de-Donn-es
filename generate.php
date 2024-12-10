@@ -60,7 +60,7 @@ for ($i = 1; $i <= $numberOfUsers; $i++) {
     $registrationDate = $faker->date;
     $subscriptionID = $subscriptionIDs[array_rand($subscriptionIDs)]; // Pick a random SubscriptionID
 
-    $stmt = $conn->prepare("INSERT INTO User (UserID, FirstName, LastName, Email, RegistrationDate, SubscriptionID) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO user (UserID, FirstName, LastName, Email, RegistrationDate, SubscriptionID) VALUES (?, ?, ?, ?, ?, ?)");
     $stmt->bind_param('issssi', $i, $firstName, $lastName, $email, $registrationDate, $subscriptionID);
     $stmt->execute();
     $stmt->close();
@@ -72,7 +72,7 @@ for ($i = 1; $i <= $numberOfMovies; $i++) {
     $genre = $faker->randomElement(['Comedy', 'Horror', 'Romance', 'Science Fiction', 'Documentary']);
     $releaseYear = $faker->year;
     $duration = $faker->numberBetween(80, 180); // Durée entre 80 et 180 minutes
-    $rating = $faker->randomElement(['PG', 'PG-13', 'R']);
+    $rating = $faker->randomElement([1, 2, 3, 4, 5]);
 
     $stmt = $conn->prepare("INSERT INTO Movie (MovieID, Title, Genre, ReleaseYear, Duration, Rating) VALUES (?, ?, ?, ?, ?, ?)");
     $stmt->bind_param('isssis', $i, $title, $genre, $releaseYear, $duration, $rating);

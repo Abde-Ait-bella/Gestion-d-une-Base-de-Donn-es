@@ -45,6 +45,8 @@ ALTER TABLE movie MODIFY COLUMN
 Rating DECIMAL(10,2),
 ADD CONSTRAINT chk_rating CHECK (Rating BETWEEN 0 AND 5);
 
+ALTER TABLE
+
 -- Ajouter constraint FOREIGN KEY
 ALTER TABLE review ADD CONSTRAINT fk_user_review 
 FOREIGN KEY (UserID) REFERENCES user(UserID);
@@ -104,3 +106,5 @@ U.SubscriptionID = S.SubscriptionID
 GROUP BY
 U.SubscriptionID;
 
+-- Sous-requête (Bonus): Trouver les films ayant une note moyenne supérieure à 4.
+SELECT * FROM movie WHERE  MovieID IN (SELECT MovieID FROM review WHERE rating = 4);
