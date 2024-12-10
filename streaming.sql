@@ -108,3 +108,6 @@ U.SubscriptionID;
 
 -- Sous-requête (Bonus): Trouver les films ayant une note moyenne supérieure à 4.
 SELECT * FROM movie WHERE  MovieID IN (SELECT MovieID FROM review WHERE rating = 4);
+
+--Self-Join (Bonus): Trouver des paires de films du même genre sortis la même année.
+SELECT M1.Title, M2.Title, M2.Genre, M2.ReleaseYear FROM movie M1 JOIN movie M2 ON M1.MovieID != M2.MovieID WHERE M1.Genre = M2.Genre AND M1.ReleaseYear = M2.ReleaseYear;
