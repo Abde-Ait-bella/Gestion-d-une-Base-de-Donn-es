@@ -63,6 +63,9 @@ SELECT * , S.Subscription_Type FROM user U INNER JOIN subscription S ON U.Subscr
 
 SELECT U.firstName, U.LastName, W.CompletionPercentage,
 CASE
-	WHEN W.CompletionPercentage < 100 THEN 'watching' ELSE 'watched' 
-END AS watched  
+	WHEN W.CompletionPercentage < 100 THEN 'Watching' ELSE 'Watched' 
+END AS Status
 FROM user U INNER JOIN watchhistory W ON U.UserID = W.UserID WHERE W.CompletionPercentage = 100;
+
+-- Trier et limiter : Afficher les 5 films les plus longs, triés par durée.
+SELECT * FROM movie ORDER BY Duration DESC;
