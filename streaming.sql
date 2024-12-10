@@ -40,6 +40,11 @@ CREATE TABLE movie ( MovieID INT AUTO_INCREMENT PRIMARY KEY, Title VARCHAR(225),
 -- Renemer de colonne de tableau Subscription
 ALTER TABLE subscription RENAME COLUMN MinthlyFee TO MonthlyFee;
 
+-- Modifier colonne rating
+ALTER TABLE movie MODIFY COLUMN 
+Rating DECIMAL(10,2),
+ADD CONSTRAINT chk_rating CHECK (Rating BETWEEN 0 AND 5);
+
 -- Ajouter constraint FOREIGN KEY
 ALTER TABLE review ADD CONSTRAINT fk_user_review 
 FOREIGN KEY (UserID) REFERENCES user(UserID);
@@ -55,6 +60,13 @@ INSERT INTO movie (Title, Genre) VALUES ('Data Science Adventures', 'Documentary
 
 -- Rechercher des films : Lister tous les films du genre "Comedy" sortis après 2020
 SELECT * FROM movie WHERE genre = "Comedy" AND ReleaseYear > 2020;
+
+-- Mise à jour des abonnements : Passer tous les utilisateurs de "Basic" à "Premium"..
+UPDATE user SET SubscriptionID = 
+CASE
+	WHEN  1 THEN 2
+    ELSE  2
+END;
 
 -- Afficher les abonnements : Joindre les utilisateurs à leurs types d'abonnements.
 SELECT * , S.Subscription_Type FROM user U INNER JOIN subscription S ON U.SubscriptionID = S.SubscriptionID
@@ -91,3 +103,4 @@ ON
 U.SubscriptionID = S.SubscriptionID
 GROUP BY
 U.SubscriptionID;
+
