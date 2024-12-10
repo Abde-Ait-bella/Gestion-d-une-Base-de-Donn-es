@@ -59,5 +59,10 @@ SELECT * FROM movie WHERE genre = "Comedy" AND ReleaseYear > 2020;
 -- Afficher les abonnements : Joindre les utilisateurs à leurs types d'abonnements.
 SELECT * , S.Subscription_Type FROM user U INNER JOIN subscription S ON U.SubscriptionID = S.SubscriptionID
 
--- Afficher les abonnements : Joindre les utilisateurs à leurs types d'abonnements.
-SELECT * FROM review WHERE ReviewDate < CURRENT_DATE();
+-- Filtrer les visionnages : Trouver tous les utilisateurs ayant terminé de regarder un film.
+
+SELECT U.firstName, U.LastName, W.CompletionPercentage,
+CASE
+	WHEN W.CompletionPercentage < 100 THEN 'watching' ELSE 'watched' 
+END AS watched  
+FROM user U INNER JOIN watchhistory W ON U.UserID = W.UserID WHERE W.CompletionPercentage = 100;
