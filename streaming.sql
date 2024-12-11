@@ -110,11 +110,18 @@ U.SubscriptionID;
 SELECT * FROM movie WHERE  MovieID IN (SELECT MovieID FROM review WHERE rating = 4);
 
 --Self-Join (Bonus): Trouver des paires de films du même genre sortis la même année.
-SELECT M1.Title, M2.Title, M2.Genre, M2.ReleaseYear FROM movie M1 JOIN movie M2 ON M1.MovieID != M2.MovieID WHERE M1.Genre = M2.Genre AND M1.ReleaseYear = M2.ReleaseYear;
+SELECT M1.Title, M2.Title, M1.Genre,  M1.ReleaseYear  FROM movie M1 JOIN movie M2 WHERE M1.MovieID != M2.MovieID AND M1.Genre = M2.Genre AND M1.ReleaseYear = M2.ReleaseYear AND M1.MovieID > M2.MovieID;
 
 -- CTE (Bonus): Lister les 3 films les mieux notés grâce à une expression de table commune.
 WITH MovieIDS AS 
 (SELECT * FROM review ORDER BY Rating DESC LIMIT 3)
-
 SELECT * FROM movie 
 WHERE MovieID IN (SELECT MovieID FROM MovieIDS);
+
+-- Trigger (Bonus): Créer un trigger qui enregistre une alerte lorsqu’un film obtient une note moyenne inférieure à 3.
+CREATE TABLE alert( id INT PRIMARY KEY AUTO_INCREMENT, text VARCHAR(255) NOT NULL, MovieID int, FOREIGN KEY(MovieID) REFERENCES movie(MovieID) );
+
+CREATE TRIGGER Film_Infirieur_3 AFTER INSERT ON review FOR EACH ROW BEGIN IF (SELECT AVG(Rating) FROM review WHERE MovieID = NEW.movieID) < 3 THEN INSERT INTO alert (text, MovieID) VALUES ("film obtient une note moyenne inférieure à 3", NEW.movieID); END IF; END;
+
+
+
